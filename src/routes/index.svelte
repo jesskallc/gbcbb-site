@@ -1,5 +1,17 @@
+<script context='module'>
+	import client, { FRONTPAGE } from '../qlClient';
+
+	export async function preload({params, query}) {
+		const results = await client.query({
+				query: FRONTPAGE
+		})
+		console.log(JSON.stringify(results.data.frontPage, null, 2))
+		return {page: results.data.frontPage}
+	}
+</script>
 <script>
-	import successkid from 'images/successkid.jpg';
+	import BlockText from '../components/BlockText.svelte';
+	export let page;
 </script>
 
 <style>
@@ -21,8 +33,8 @@
 
 	img {
 		width: 100%;
-		max-width: 400px;
-		margin: 0 0 1em 0;
+		/* max-width: 400px;
+		margin: 0 0 1em 0; */
 	}
 
 	p {
@@ -36,15 +48,10 @@
 	}
 </style>
 
-<svelte:head>
-	<title>Sapper project template</title>
-</svelte:head>
+<img src={page.hero.formats.large.url} alt="" />
+<h1>{page.header}</h1>
 
-<h1>Great success!</h1>
-
-<figure>
-	<img alt="Success Kid" src="{successkid}">
-	<figcaption>Have fun with Sapper!</figcaption>
-</figure>
-
-<p><strong>Try editing this file (src/routes/index.svelte) to test live reloading.</strong></p>
+{#each page.info as section}
+  <h2>{section.header}</h2>
+  <BlockText text={section.body}/>
+{/each}

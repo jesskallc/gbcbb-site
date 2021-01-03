@@ -7,6 +7,8 @@
 </script>
 
 <script>
+	import Map from "../../components/Map.svelte";
+
 	export let posts;
 </script>
 
@@ -16,10 +18,6 @@
 		line-height: 1.5;
 	}
 </style>
-
-<svelte:head>
-	<title>Blog</title>
-</svelte:head>
 
 <h1>Recent posts</h1>
 
@@ -32,3 +30,5 @@
 		<li><a rel="prefetch" href="blog/{post.slug}">{post.title}</a></li>
 	{/each}
 </ul>
+
+<Map/>
