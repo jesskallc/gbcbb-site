@@ -1,11 +1,15 @@
 <script context='module'>
-	import client, { FRONTPAGE } from '../qlClient';
+	// import client, { FRONTPAGE } from '../qlClient';
+	import {getFrontPage} from '../qlClient';
 
 	export async function preload({params, query}) {
-		const results = await client.query({
-				query: FRONTPAGE
-		})
-		console.log(JSON.stringify(results.data.frontPage, null, 2))
+		let results = await getFrontPage()
+		results = await results.json()
+
+		// const results = await client.query({
+		// 		query: FRONTPAGE
+		// })
+		// console.log(JSON.stringify(results.data.frontPage, null, 2))
 		return {page: results.data.frontPage}
 	}
 </script>
@@ -48,8 +52,10 @@
 	}
 </style>
 
-<img src={page.hero.formats.large.url} alt="" />
-<h1>{page.header}</h1>
+{#if page.hero}
+  <img class="hero" src={page.hero.formats.large.url} alt="" />
+{/if}
+<h1 class="page-header">{page.header}</h1>
 
 {#each page.info as section}
   <h2>{section.header}</h2>

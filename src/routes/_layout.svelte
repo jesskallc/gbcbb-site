@@ -1,11 +1,11 @@
 <script context='module'>
-	import client, { SITE_SETTINGS } from '../qlClient';
+	// import client, { getSettings, SITE_SETTINGS } from '../qlClient';
+	import {getSettings} from '../qlClient';
+
 	export async function preload({params, query}) {
-			const results = await client.query({
-					query: SITE_SETTINGS
-			})
-			// console.log(JSON.stringify(results.data, null, 2))
-			return {page: results.data.setting}
+		let results = await getSettings()
+		results = await results.json()
+		return {page: results.data.setting}
 	}
 </script>
 <script>
