@@ -1,12 +1,27 @@
 <script context='module'>
-	// import client, { getSettings, SITE_SETTINGS } from '../qlClient';
-	import {getSettings} from '../qlClient';
-
 	export async function preload({params, query}) {
-		let results = await getSettings()
-		results = await results.json()
-		return {page: results.data.setting}
-	}
+		if (process.env.NODE_ENV === 'development'){
+			return this.fetch(`settings.json`)
+			.then(r => r.json())
+			.then(results => {
+				return {page: results.data.setting};
+			});
+		}else {
+			let results = await this.fetch(`${process.env.API_ENDPOINT}/site/settings`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({endpoint: "https://insitedatasolutions.com/graphql"}),
+			})
+			.catch(err => {
+				console.log(`fetch settings error ${err}`)
+			})
+			results = await results.json()
+			// console.log(results)
+			return {page: results.data.setting}
+		}
+	}	
 </script>
 <script>
 	import Nav from '../components/Nav.svelte';

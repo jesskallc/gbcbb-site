@@ -52,7 +52,10 @@ async function fetchAndCache(request) {
 }
 
 self.addEventListener('fetch', event => {
-	if (event.request.method !== 'GET' || event.request.headers.has('range')) return;
+	if (event.request.method !== 'GET' || event.request.headers.has('range')){
+		console.log(`service worker here`)
+		return;
+	} 
 
 	const url = new URL(event.request.url);
 

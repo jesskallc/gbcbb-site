@@ -1,25 +1,41 @@
 <script>
+	import { onMount } from 'svelte';
 	import marked from 'marked';
-    export let text
+	export let text;
+	export let text_cleaned = "";
+	export let className = "";
 	export let _marked = marked;
+
 	async function sanitizeHtml(text){
-		const endpoint = `${process.env.UTIL_API_ENDPOINT}/sanitize`
-		const request = {
-				body: JSON.stringify({
-					text: text
-				}),
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				}
+		if(process.env.NODE_ENV === 'development'){
+			return text
+		}else{
+			const endpoint = `${process.env.UTIL_API_ENDPOINT}/sanitize`
+			const request = {
+					body: JSON.stringify({
+						text: text
+					}),
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					}
+			}
+			return fetch(endpoint, request)
+			.then(res => res.json())
+			.then(res => {
+				return res.clean
+			})
+			.catch(err => {
+				console.log(err)
+			})
 		}
-		let result = await fetch(endpoint, request)
-		result = await result.json()
-		console.log(result)
-		return result.clean
 	}
+
+	onMount(async () => {
+		text_cleaned = await sanitizeHtml(_marked(text))
+	});
 </script>
 
-<div class="box">
-	<slot>{@html _marked(text)}</slot>
+<div class={className}>
+	<slot>{@html text_cleaned}</slot>
 </div>
