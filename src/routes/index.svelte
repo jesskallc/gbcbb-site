@@ -24,9 +24,9 @@
 	}
 </script>
 <script>
-	import BlockText from '../components/BlockText.svelte';
-	import PostPreview from '../components/PostPreview.svelte';
-import Index from './blog/index.svelte';
+    import HeroSection from '../components/HeroSection.svelte';
+import PageHeader from '../components/PageHeader.svelte';
+import PageSection from '../components/PageSection.svelte';
 	export let page;
 </script>
 
@@ -60,31 +60,8 @@ import Index from './blog/index.svelte';
 	}
 </style>
 
-{#if page.hero}
-  <img class="hero" src={page.hero.formats.large.url} alt="" />
-{/if}
-<h1 class="page-header">{page.header}</h1>
-<h2 class="page-sub-header">{page.sub_header || ""}</h2>
-
+{#if page.hero}<HeroSection hero={page.hero}/>{/if}
+<PageHeader header={page.header} sub_header={page.sub_header}/>
 {#each page.sections as section, i}
-	<div class="info-box" id="info-{i}">
-		<h2 class="info-header">{section.header}</h2>
-		<h3 class="info-sub-header">{section.sub_header || ""}</h3>
-		{#if section.body}
-		  <BlockText text={section.body} className="info-text"/>
-		{/if}
-		{#each section.events as event}
-		  {#each event.posts as post}
-		    <PostPreview {...post}/>
-		  {/each}
-		{/each}
-	</div>
+	<PageSection {...section} index={i}/>
 {/each}
-<!--
-{#each page.events as section}
-  <h2>{section.categories.title}</h2>
-  {#each section.categories.posts as post}
-	<PostPreview {...post}/>
-  {/each}
-{/each}
--->

@@ -40,6 +40,7 @@ const content = JSON.stringify({
                                     "author": {
                                         "name": "Pastor David"
                                     },
+                                    "media": null,
                                     "event_date": "2021-01-01T17:00:00.000Z",
                                     "posted_at": "2021-01-01T17:00:00.000Z"
                                 }                            
@@ -59,11 +60,15 @@ const content = JSON.stringify({
                             "current": false,
                             "posts": [
                                 {
-                                    "title": "Grandmother's of Christmas",
+                                    "title": "Prepare the Way",
                                     "cover": null,
-                                    "excerpt": "Sermon about Grandmother's of Christmas",
+                                    "excerpt": "Sermon about Preparing the Way",
                                     "author": {
                                         "name": "Pastor David"
+                                    },
+                                    "media": {
+                                        "video_url": "https://www.youtube.com/watch?v=Qvn4Hv1dNaA",
+                                        "audio_url": null
                                     },
                                     "event_date": null,
                                     "posted_at": "2020-11-09T17:00:00.000Z"
@@ -73,7 +78,6 @@ const content = JSON.stringify({
                     ]
                 }
             ],
-            "Newsletter": [],
             "hero": {
                 "url": "https://res.cloudinary.com/jesska/image/upload/v1610051570/gbcbb_7ddb607202.jpg",
                 "formats": {
